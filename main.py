@@ -11,7 +11,7 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 print(GOOGLE_API_KEY)
 genai.configure(api_key=GOOGLE_API_KEY)
 
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-2.0-flash-001')
 
 
 def draft_final_prompt(word_size, content):
@@ -27,7 +27,7 @@ Now summarize this document in around {word_size} words:
 
 def model_answer(ques):
     try:
-        config = genai.GenerationConfig(max_output_tokens = 2048, temperature = 0.5)
+        config = genai.GenerationConfig(max_output_tokens = 2048, temperature = 0.9)
         response = model.generate_content(ques, generation_config=config)
         return response.text
     except Exception as e:
@@ -52,7 +52,7 @@ def extract_pdf_content(file_path):
 
 # Streamlit UI
 def main():
-    st.title("Generative AI PDF Summarizer")
+    st.title("Ficky Generative AI Research Summarizer")
 
     # Upload PDF
     uploaded_file = st.file_uploader("Upload a PDF", type="pdf")
@@ -67,7 +67,7 @@ def main():
             # st.write("PDF Content", content)  # Display extracted content for reference
             
             # User input for model prompt
-            num_words = st.number_input("Enter the number of words for the summary (between 100 and 500):", min_value=100, max_value=500, step=10)
+            num_words = st.number_input("Enter the number of words for the summary (between 100 and 500):", min_value=100, max_value=2000, step=10)
             final_prompt = draft_final_prompt(num_words, content)
             
             if st.button("Generate Summary"):
