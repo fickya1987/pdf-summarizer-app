@@ -67,7 +67,7 @@ def main():
             # st.write("PDF Content", content)  # Display extracted content for reference
             
             # User input for model prompt
-            num_words = st.number_input("Enter the number of words for the summary (between 100 and 500):", min_value=100, max_value=2000, step=10)
+            num_words = st.number_input("Enter the number of words for the summary (between 100 and 2000):", min_value=100, max_value=2000, step=10)
             final_prompt = draft_final_prompt(num_words, content)
             
             if st.button("Generate Summary"):
